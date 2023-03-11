@@ -1,12 +1,10 @@
 package com.hugdev.webapper;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.GeolocationPermissions;
@@ -16,7 +14,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -77,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
         Button nex = findViewById(R.id.button);
         nex.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,13 +104,14 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
- private void FirstStart() {
-     SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-     SharedPreferences.Editor editor = prefs.edit();
-     boolean firstStart = prefs.getBoolean("firstStart", true);
-     editor.putBoolean("firstStart", false);
-     editor.apply();
- }
+    private void FirstStart() {
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        boolean firstStart = prefs.getBoolean("firstStart", true);
+        editor.putBoolean("firstStart", false);
+        editor.apply();
+    }
+
     public void onDeleteDataClick(View view) {
         WebView webView = findViewById(R.id.webview);
         webView.clearCache(true);

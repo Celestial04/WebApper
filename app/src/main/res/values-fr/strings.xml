@@ -6,4 +6,6 @@
     <string name="forward_button">Avancer</string>
     <string name="google_button">Google</string>
     <string name="delete_data_button">Supprimer les données</string>
+    <string name="next_button">OK</string>
+    <string name="text_example_tuto">Faites défiler ce texte pour comprendre comment fonctionne le menu puis une fois que vous êtes prêt appuyez sur \"OK\".</string>
 </resources>
