@@ -1,0 +1,10 @@
+<resources>
+    <string name="head_title_tuto1">Bienvenue sur WebApper, le navigateur simple, et sécurisé.</string>
+    <string name="body_tuto1">Dans WebApper, toute l\'application est le plus simpliste possible, cela veux dire que vous n\'aurez pas besoin d\'aller chercher un paramètre dans menu spécifique auquel il est difficile d\'accès, tout est en haut. Faites defiler le menu en haut pour avoir accès à tout les paramètres, sans quitter l\'application !</string>
+    <string name="text_button_tuto1">Appuyez sur \"OK\" pour la suite.</string>
+    <string name="forward_button">Avancer</string>
+    <string name="google_button">Google</string>
+    <string name="delete_data_button">Supprimer les données</string>
+    <string name="app_name">WebApper</string>
+
+</resources>

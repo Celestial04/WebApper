@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="head_title_tuto1">Welcome to WebApper, the simple and secure browser.</string>
+    <string name="body_tuto1">In WebApper, the whole application is as simplistic as possible, this means that you won\'t need to find a parameter in a specific menu that is difficult to access, everything is at the top. Scroll the menu at the top to access all the settings, without leaving the application!</string>
+    <string name="text_button_tuto1">Press \"OK\" to continue.</string>
+    <string name="forward_button">Foreward</string>
+    <string name="google_button">Google</string>
+    <string name="delete_data_button">Delete data</string>
+</resources>
