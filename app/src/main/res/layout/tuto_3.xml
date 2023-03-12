@@ -45,7 +45,6 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick='Next_button3'
             android:text="@string/next_button"
             android:visibility="visible" />
 
