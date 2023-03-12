@@ -8,4 +8,6 @@
     <string name="delete_data_button">Supprimer les données</string>
     <string name="next_button">OK</string>
     <string name="text_example_tuto">Faites défiler ce texte pour comprendre comment fonctionne le menu puis une fois que vous êtes prêt appuyez sur \"OK\".</string>
+    <string name="body_tuto2">La sécurité, c\'est le plus important, et dans WebApper, vos activitées sur internet peuvent être effacé à tout moment et rapidement dans le menu.</string>
+    <string name="text_example_tuto2">Faites défiler ce texte pour appuyer sur le bouton qui vous permetra d\'accèder à la suite.</string>
 </resources>

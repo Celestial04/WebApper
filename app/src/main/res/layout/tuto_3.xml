@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:context=".tuto_3">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,57 +18,26 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/head_title_tuto1"
+            android:text="@string/head_title_tuto3"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/body_tuto2"
+            android:text="@string/body_tuto3"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="137dp" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_example_tuto2"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                <Space
-                    android:layout_width="61dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/button_example_show"
-                    style="@style/Widget.AppCompat.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_example_3" />
-            </LinearLayout>
-        </HorizontalScrollView>
-
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="bottom"
-            android:text="@string/text_button_tuto1"
+            android:text="@string/text_button_tuto3"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <Button
@@ -74,9 +45,10 @@
             style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick='Next_button2'
+            android:onClick='Next_button3'
             android:text="@string/next_button"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,15 +28,26 @@
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/forward_button"
-                    app:iconPadding="0dp" />
+                    android:text="@string/forward_button"/>
+
+                <Button
+                    android:id="@+id/button6"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_fav" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/favorite_button_add" />
 
                 <Button
                     android:id="@+id/button3"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/google_button" />
 
                 <Button

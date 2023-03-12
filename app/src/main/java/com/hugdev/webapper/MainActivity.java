@@ -1,5 +1,6 @@
 package com.hugdev.webapper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -13,10 +14,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
         ProgressBar myProgressBar = findViewById(R.id.progressBar);
 
         webView.setWebViewClient(new WebViewClient() {
@@ -83,6 +90,68 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        Button viewFav = findViewById(R.id.button6);
+        viewFav.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String currentUrl = webView.getUrl();
+                String currentName = webView.getTitle();
+                SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+                Map<String, ?> favoritesMap = sharedPreferences.getAll();
+                List<String> favoritesList = new ArrayList<>();
+                for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                    String url = entry.getKey();
+                    String name = entry.getValue().toString();
+                    String currentNamee = name + " : " + url;
+                    favoritesList.add(currentNamee);
+                }
+                final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Favoris enregistrés")
+                        .setItems(favoritesArray, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Gérer le clic sur un élément de la liste (par exemple, charger l'URL dans WebView)
+                                for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                                    if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
+                                        String url = entry.getKey();
+                                        webView.loadUrl(url);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+
+        Button AddFav = findViewById(R.id.button5);
+
+                AddFav.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        WebView webView = findViewById(R.id.webview);
+                        String currentUrl = webView.getUrl();
+                        String currentName = webView.getTitle();
+                        SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(currentUrl, currentName);
+                        editor.apply();
+
+                        if (sharedPreferences.contains(currentUrl)) {
+                            Toast.makeText(getApplicationContext(), currentName + " est déjà enregistré.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), currentName + " à été enregistré.", Toast.LENGTH_SHORT).show();
+                            }
+                    }
+                });
+
+
+
+
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
 
@@ -95,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
 
     private void showStartDialog() {
