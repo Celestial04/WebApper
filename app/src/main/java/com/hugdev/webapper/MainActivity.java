@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        Button viewFav = findViewById(R.id.button7);
-viewFav.setOnClickListener(new View.OnClickListener(){
+        Button RemFav = findViewById(R.id.button7);
+RemFav.setOnClickListener(new View.OnClickListener(){
     @Override
     public void onClick(View view) {
         String currentUrl = webView.getUrl();
