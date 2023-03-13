@@ -189,6 +189,8 @@ remFav.setOnClickListener(new View.OnClickListener(){
                         for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
                             if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
                                 String url = entry.getKey();
+                                String name = entry.getValue().toString();
+                                String currentNamee = name + " : " + url;
                                 editor.remove(url); // Supprimer le favori
                                 editor.apply();
                                 break;
