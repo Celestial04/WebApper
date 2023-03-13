@@ -189,12 +189,10 @@ remFav.setOnClickListener(new View.OnClickListener(){
                         for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
                             if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
                                 String url = entry.getKey();
-                                String name = entry.getValue().toString();
-                                String currentNamee = name + " : " + url;
                                 editor.remove(url); // Supprimer le favori
                                 editor.apply();
+                                Toast.makeText(MainActivity.this, "Favori supprimé : " + favoritesArray[which].split(" : ")[0], Toast.LENGTH_SHORT).show(); // Afficher le message toast
                                 break;
-                                Toast.makeText(getApplicationContext(), currentNamee + " à été supprimé.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -204,6 +202,7 @@ remFav.setOnClickListener(new View.OnClickListener(){
         dialog.show();
     }
 });
+
 
     }
 
