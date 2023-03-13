@@ -165,6 +165,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+Button viewFav = findViewById(R.id.button6);
+viewFav.setOnClickListener(new View.OnClickListener(){
+    @Override
+    public void onClick(View view) {
+        String currentUrl = webView.getUrl();
+        String currentName = webView.getTitle();
+        SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+        Map<String, ?> favoritesMap = sharedPreferences.getAll();
+        List<String> favoritesList = new ArrayList<>();
+        for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+            String url = entry.getKey();
+            String name = entry.getValue().toString();
+            String currentNamee = name + " : " + url;
+            favoritesList.add(currentNamee);
+        }
+        final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Favoris enregistrés")
+                .setItems(favoritesArray, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Supprimer le favori correspondant
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                            if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
+                                String url = entry.getKey();
+                                editor.remove(url); // Supprimer le favori
+                                editor.apply();
+                                break;
+                            }
+                        }
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+});
 
 
     private void showStartDialog() {
