@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
                         Set<String> savedFavorites = prefs.getStringSet("favorites", new HashSet<>());
                         ArrayList<String> favoriteList = new ArrayList<>(savedFavorites);
                 Button RemFav = findViewById(R.id.button7);
-
                 RemFav.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
