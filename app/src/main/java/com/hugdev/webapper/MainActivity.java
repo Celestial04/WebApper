@@ -108,17 +108,20 @@ public class MainActivity extends AppCompatActivity {
                 final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Favoris enregistrés")
+                builder.setTitle("Supprimer un favori")
                         .setItems(favoritesArray, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Gérer le clic sur un élément de la liste (par exemple, charger l'URL dans WebView)
-                                for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
-                                    if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
-                                        String url = entry.getKey();
-                                        webView.loadUrl(url);
-                                        break;
-                                    }
-                                }
+                                String selectedFavorite = favoritesArray[which];
+        
+                                // Remove the selected favorite from the SharedPreferences
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.remove(selectedFavorite.split(" : ")[1]);
+                                editor.apply();
+
+                                // Update the dialog list by removing the selected favorite
+                                favoritesList.remove(selectedFavorite);
+                                favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
+                                builder.setItems(favoritesArray, this);
                             }
                         });
 
@@ -149,26 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                        Set<String> savedFavorites = prefs.getStringSet("favorites", new HashSet<>());
-                        ArrayList<String> favoriteList = new ArrayList<>(savedFavorites);
-                Button RemFav = findViewById(R.id.button7);
-                RemFav.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
                         
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle("Favorites");
-                        builder.setItems(favoriteList.toArray(new String[0]), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            favoriteList.remove(which);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putStringSet("favorites", new HashSet<>(favoriteList));
-                            editor.apply();
-    }
-});
 builder.show();
 
                     }
