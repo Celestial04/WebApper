@@ -149,27 +149,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
-Button RemFav = findViewById(R.id.button7);
-
-                RemFav.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                        Set<String> savedFavorites = prefs.getStringSet("favorites", new HashSet<>());
-                        ArrayList<String> favoriteList = new ArrayList<>(savedFavorites);
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle("Favorites");
-                        builder.setItems(favoriteList.toArray(new String[0]), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            favoriteList.remove(which);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putStringSet("favorites", new HashSet<>(favoriteList));
-                            editor.apply();
-    }
-});
 builder.show();
 
                     }
