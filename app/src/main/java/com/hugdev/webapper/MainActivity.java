@@ -192,7 +192,7 @@ remFav.setOnClickListener(new View.OnClickListener(){
                                 editor.remove(url); // Supprimer le favori
                                 editor.apply();
                                 break;
-                                Toast.makeText(getApplicationContext(), currentNamee + " à été supprimé.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), name + " à été supprimé.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
