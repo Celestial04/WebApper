@@ -163,8 +163,6 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         }
 
-    }
-
 Button remFav = findViewById(R.id.button7);
 remFav.setOnClickListener(new View.OnClickListener(){
     @Override
@@ -203,6 +201,10 @@ remFav.setOnClickListener(new View.OnClickListener(){
         dialog.show();
     }
 });
+
+    }
+
+
 
 
     private void showStartDialog() {
