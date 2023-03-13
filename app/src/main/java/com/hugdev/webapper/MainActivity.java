@@ -156,7 +156,7 @@ RemFav.setOnClickListener(new View.OnClickListener(){
 builder.show();
 
                     }
-                });
+                };
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
