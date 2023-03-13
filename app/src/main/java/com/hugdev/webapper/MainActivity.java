@@ -191,7 +191,7 @@ remFav.setOnClickListener(new View.OnClickListener(){
                                 String url = entry.getKey();
                                 editor.remove(url); // Supprimer le favori
                                 editor.apply();
-                                Toast.makeText(MainActivity.this, "Favori supprimé : " + favoritesArray[which].split(" : ")[0], Toast.LENGTH_SHORT).show(); // Afficher le message toast
+                                Toast.makeText(MainActivity.this, favoritesArray[which].split(" : ")[0] + " à été supprimé.", Toast.LENGTH_SHORT).show(); // Afficher le message toast
                                 break;
                             }
                         }
