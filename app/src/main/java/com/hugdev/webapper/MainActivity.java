@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString(currentUrl, currentName);
                         editor.apply();
 
-                        if (sharedPreferences.contains(currentUrl)) {
+                        if (sharedPreferences.contains(currentName)) {
                             Toast.makeText(getApplicationContext(), currentName + " est déjà enregistré.", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplicationContext(), currentName + " à été enregistré.", Toast.LENGTH_SHORT).show();
@@ -181,7 +181,7 @@ remFav.setOnClickListener(new View.OnClickListener(){
         final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Favoris enregistrés")
+        builder.setTitle("Supprimer un favori")
                 .setItems(favoritesArray, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Supprimer le favori correspondant
@@ -192,6 +192,7 @@ remFav.setOnClickListener(new View.OnClickListener(){
                                 editor.remove(url); // Supprimer le favori
                                 editor.apply();
                                 break;
+                                Toast.makeText(getApplicationContext(), currentNamee + " à été supprimé.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
