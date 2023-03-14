@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF"
         android:orientation="vertical"
+        android:layout_gravity="bottom"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
