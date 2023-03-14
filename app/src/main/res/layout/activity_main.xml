@@ -43,6 +43,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/favorite_button_add" />
                 <Button
+                    android:id="@+id/button8"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/refresh_button"/>
+                <Button
                     android:id="@+id/button7"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
