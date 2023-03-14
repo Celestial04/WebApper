@@ -166,6 +166,14 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         }
 
+Button reloadButton = findViewById(R.id.button8); // assuming you have a Button with id "reload_button" in your layout
+reloadButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        webView.reload(); // reload the web page
+    }
+});
+
 Button remFav = findViewById(R.id.button7);
 remFav.setOnClickListener(new View.OnClickListener(){
     @Override
