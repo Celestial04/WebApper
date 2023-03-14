@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        WebView webView = findViewById(R.id.web_view); // assuming you have a WebView with id "web_view" in your layout
 
 // Register the WebView for the context menu
 registerForContextMenu(webView);
