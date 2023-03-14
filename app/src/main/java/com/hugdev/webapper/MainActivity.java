@@ -80,6 +80,40 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        WebView webView = findViewById(R.id.web_view); // assuming you have a WebView with id "web_view" in your layout
+
+// Register the WebView for the context menu
+registerForContextMenu(webView);
+
+// Override the onCreateContextMenu method to create the context menu
+@Override
+public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    WebView webView = (WebView) v;
+    HitTestResult result = webView.getHitTestResult();
+    if (result.getType() == HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+        // If the user long-pressed on an image link, show a menu with options to save or share the image
+        menu.setHeaderTitle(result.getExtra());
+        menu.add(Menu.NONE, 1, Menu.NONE, "Save image");
+        menu.add(Menu.NONE, 2, Menu.NONE, "Share image");
+    }
+}
+
+// Handle clicks on the context menu items
+@Override
+public boolean onContextItemSelected(MenuItem item) {
+    WebView webView = findViewById(R.id.webview);
+    switch (item.getItemId()) {
+        case 1:
+            // Save image logic
+            return true;
+        case 2:
+            // Share image logic
+            return true;
+        default:
+            return super.onContextItemSelected(item);
+    }
+}
 
         Button nex = findViewById(R.id.button);
         nex.setOnClickListener(new View.OnClickListener() {
