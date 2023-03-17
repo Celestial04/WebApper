@@ -1,14 +1,22 @@
 package com.hugdev.webapper;
 
+import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.DocumentsContract;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
 import android.webkit.GeolocationPermissions;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -32,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -43,6 +54,43 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+        });
+
+        webView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+                String fileName = URLUtil.guessFileName(url, contentDisposition, mimeType);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Voulez-vous télécharger \"" + fileName + "\" ?");
+                builder.setCancelable(false);
+
+                builder.setPositiveButton(
+                        "Oui",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                                request.allowScanningByMediaScanner();
+                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+                                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                                downloadManager.enqueue(request);
+                                dialog.cancel();
+                                Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " vient de débuter.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                builder.setNegativeButton(
+                        "Non",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         });
 
         ProgressBar myProgressBar = findViewById(R.id.progressBar);
@@ -61,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
         webView.loadUrl("https://google.com/");
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -151,6 +200,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                     }
                 });
+
+
 
 
 
@@ -305,4 +356,6 @@ remFav.setOnClickListener(new View.OnClickListener(){
         }
     }
 
+
 }
+
