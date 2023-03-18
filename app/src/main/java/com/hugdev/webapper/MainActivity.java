@@ -3,6 +3,7 @@ package com.hugdev.webapper;
 import static android.app.DownloadManager.*;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -169,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
                                                 alert2.dismiss(); // Fermer le AlertDialog affichant les statistiques
                                                 Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " a échoué.", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                int downloadedBytes = cursor.getInt(cursor.getColumnIndex(COLUMN_BYTES_DOWNLOADED_SO_FAR));
-                                                int bytesTotal = cursor.getInt(cursor.getColumnIndex(COLUMN_TOTAL_SIZE_BYTES));
+                                                @SuppressLint("Range") int downloadedBytes = cursor.getInt(cursor.getColumnIndex(COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                                                @SuppressLint("Range") int bytesTotal = cursor.getInt(cursor.getColumnIndex(COLUMN_TOTAL_SIZE_BYTES));
                                                 int progress = (int) ((bytesDownloaded[0] * 100L) / bytesTotal);
                                                 long elapsedTime = System.currentTimeMillis() - startTime;
                                                 double bytesPerSecond = (downloadedBytes - bytesDownloaded[0]) * 1000.0 / elapsedTime / 1000000.0;
