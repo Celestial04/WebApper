@@ -19,7 +19,7 @@ public class tuto_2 extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(btn1.getVisibility() == View.VISIBLE) {
+                if (btn1.getVisibility() == View.VISIBLE) {
                     btn1.setVisibility(View.INVISIBLE);
                 } else {
                     btn1.setVisibility(View.VISIBLE);
@@ -28,7 +28,7 @@ public class tuto_2 extends AppCompatActivity {
         });
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent intent = new Intent(tuto_2.this, tuto_3.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

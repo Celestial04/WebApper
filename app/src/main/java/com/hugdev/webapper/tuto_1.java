@@ -20,7 +20,7 @@ public class tuto_1 extends AppCompatActivity {
         Button btn = findViewById(R.id.button4);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent intent = new Intent(tuto_1.this, tuto_2.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

@@ -13,13 +13,12 @@
     <string name="head_title_tuto2">La sécurité, et la simplicité</string>
     <string name="head_title_tuto3">Vous avez presque terminé</string>
     <string name="body_tuto3">WebApper, c\'est un navigateur web concentré sur la simplicité, rapidité et sécurité.</string>
-    <string name="body_tuto3_1">Écrivez le mot "sécurité".</string>
     <string name="text_button_tuto3">Appuyez sur \"OK\" pour terminer.</string>
     <string name="button_example_3">Appuyez ici pour faire apparaître le bouton \"OK\".</string>
     <string name="favorite_button_add">Ajouter cette page aux favoris</string>
-    <string name="password_tuto_3">Saisissez la phrase ici.</string>
     <string name="view_fav">Voir les favoris d\'enregistrées</string>
     <string name="delete_fav_button">Supprimer un favori d\'enregistré</string>
     <string name="refresh_button">Recharger</string>
+
 
 </resources>
