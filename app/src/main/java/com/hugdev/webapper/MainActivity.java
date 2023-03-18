@@ -187,14 +187,14 @@ public class MainActivity extends AppCompatActivity {
                                                 bytesDownloaded[0] = downloadedBytes;
                                                 textView.setText("Téléchargement en cours... " + progress + "%");
                                                 progressdl.setProgress(progress);
-                                                handler.postDelayed(this, 500); // Vérifier à nouveau dans 50 milliseconde
+                                                handler.postDelayed(this, 50); // Vérifier à nouveau dans 50 milliseconde
                                             }
                                         }
                                         cursor.close();
 
                                     }
                                 };
-                                handler.postDelayed(runnable, 500); // Vérifier l'état du téléchargement toutes les secondes
+                                handler.postDelayed(runnable, 50); // Vérifier l'état du téléchargement toutes les secondes
                             }
 
                         }).setNegativeButton(
