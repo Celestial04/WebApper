@@ -51,7 +51,6 @@
 
                 <Button
                     android:id="@+id/button_example_show"
-                    style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/button_example_3" />
@@ -67,7 +66,6 @@
 
         <Button
             android:id="@+id/button4"
-            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next_button"

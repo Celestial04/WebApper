@@ -19,6 +19,9 @@
     <string name="view_fav">Voir les favoris d\'enregistrées</string>
     <string name="delete_fav_button">Supprimer un favori d\'enregistré</string>
     <string name="refresh_button">Recharger</string>
-
+    <string name="btn_chg_color">Changer la couleur</string>
+    <string name="changer_la_couleur">Changer la couleur</string>
+    <dimen name="SizeMenubtn">35dp</dimen>
+    <dimen name="SizeMenu">45dp</dimen>
 
 </resources>

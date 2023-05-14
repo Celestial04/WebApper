@@ -1,8 +1,14 @@
 package com.hugdev.webapper;
 
-import static android.app.DownloadManager.*;
+import static android.app.DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR;
+import static android.app.DownloadManager.COLUMN_STATUS;
+import static android.app.DownloadManager.COLUMN_TOTAL_SIZE_BYTES;
+import static android.app.DownloadManager.Query;
+import static android.app.DownloadManager.Request;
+import static android.app.DownloadManager.STATUS_FAILED;
+import static android.app.DownloadManager.STATUS_SUCCESSFUL;
+import static android.app.usage.UsageEvents.Event.NONE;
 
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.DialogInterface;
@@ -16,8 +22,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.GeolocationPermissions;
@@ -26,6 +33,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,24 +43,57 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.color.DynamicColors;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private AlertDialog alert2;
+    private int selectedTheme;
 
 
-
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        int savedTheme = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getInt("selected_theme", NONE);
+        if (savedTheme != NONE) {
+            selectedTheme = savedTheme;
+        }
+        setTheme(selectedTheme);
+        DynamicColors.applyIfAvailable(this);
+        DynamicColors.applyToActivitiesIfAvailable(getApplication());
         setContentView(R.layout.activity_main);
+        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
 
+// Returns an intent object that you use to check for an update.
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
+// Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE);
+            }// This example applies an immediate update. To apply a flexible update
+// instead, pass in AppUpdateType.FLEXIBLE
+// Request the update.
+        });
+        HorizontalScrollView scroll = findViewById(R.id.scroll);
+        scroll.fullScroll(View.FOCUS_DOWN);
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -64,8 +107,69 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        Button soundButton = findViewById(R.id.soundButton);
+        soundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Créer une boîte de dialogue avec trois options
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Choisir un thème");
+
+                String[] options = {"Thème noir", "Thème blanc", "Thème auto de l'appareil"};
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Vérifier quelle option a été sélectionnée et mettre le thème correspondant
+                        switch (which) {
+                            case 0:
+                                Toast.makeText(getApplicationContext(), "Thème noir activé", Toast.LENGTH_SHORT).show();
+                                selectedTheme = R.style.Theme_WebApper_dark;
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                                updateTheme();
+                                break;
+                            case 1:
+                                Toast.makeText(getApplicationContext(), "Thème blanc activé", Toast.LENGTH_SHORT).show();
+                                selectedTheme = R.style.Theme_WebApper_light;
+                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                                updateTheme();
+                                break;
+                            case 2:
+                                Toast.makeText(getApplicationContext(), "Thème auto de l'appareil activé", Toast.LENGTH_SHORT).show();
+                                selectedTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+                                updateTheme();
+                                break;
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+        Button nex = findViewById(R.id.button);
+        if (webView.canGoForward()) {
+            // Afficher le bouton "forward"
+            nex.setVisibility(View.VISIBLE);
+        } else {
+            // Masquer le bouton "forward"
+            nex.setVisibility(View.GONE);
+        }
+        nex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (webView.canGoForward()) {
+                    webView.goForward();
+                    nex.setVisibility(View.VISIBLE);
+                }else {
+                    nex.setVisibility(View.GONE);
+                }
+            }
+
+        });
+
         webView.setDownloadListener(new DownloadListener() {
-            List<AlertDialog.Builder> dialogsList = new ArrayList<>();
+            final List<AlertDialog.Builder> dialogsList = new ArrayList<>();
+
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
                 String fileName = URLUtil.guessFileName(url, contentDisposition, mimeType);
@@ -85,11 +189,11 @@ public class MainActivity extends AppCompatActivity {
                                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                                 DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                                 long downloadId = downloadManager.enqueue(request);
-                                Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " est terminé.", Toast.LENGTH_SHORT).show();
                                 // Créer et afficher un autre AlertDialog pour afficher le statut du téléchargement
                                 AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
                                 dialogsList.add(builder2);
-                                builder2.setMessage("Téléchargement en cours...");
+                                builder2.setTitle("Téléchargement en cours...");
+                                builder2.setMessage("");
                                 builder2.setCancelable(false);
                                 LinearLayout layout = new LinearLayout(MainActivity.this);
                                 layout.setOrientation(LinearLayout.VERTICAL);
@@ -116,31 +220,25 @@ public class MainActivity extends AppCompatActivity {
                                     progressdl.setIndeterminate(false);
                                 }
 
-                                cancelButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
+                                cancelButton.setOnClickListener(v -> {
 
 
-                                        downloadManager.remove(downloadId); // Annuler le téléchargement
-                                        Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " a été annulé.", Toast.LENGTH_SHORT).show();
-                                        showNextDialog();
-                                    }
+                                    downloadManager.remove(downloadId); // Annuler le téléchargement
+                                    Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " a été annulé.", Toast.LENGTH_SHORT).show();
+                                    showNextDialog();
                                 });
 
 
-
                                 builder2.setView(layout);
-                                builder2.setPositiveButton("Annuler le téléchargement", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        downloadManager.remove(downloadId);
-                                        dialog.cancel();
-                                        Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
-                                        if (alert2 != null && alert2.isShowing()) { // Vérification que alert2 n'est pas null avant de l'utiliser
-                                            alert2.dismiss();
-                                            dialog.dismiss();
+                                builder2.setPositiveButton("Annuler le téléchargement", (dialog1, id1) -> {
+                                    downloadManager.remove(downloadId);
+                                    dialog1.cancel();
+                                    Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
+                                    if (alert2 != null && alert2.isShowing()) { // Vérification que alert2 n'est pas null avant de l'utiliser
+                                        alert2.dismiss();
+                                        dialog1.dismiss();
 
 
-                                        }
                                     }
                                 });
 
@@ -179,54 +277,62 @@ public class MainActivity extends AppCompatActivity {
                                                 // Calculer l'ETA
                                                 int bytesRemaining = bytesTotal - bytesDownloaded[0];
                                                 long etaSeconds = (long) (bytesRemaining / bytesPerSecond);
-                                                String eta = String.format("%02d:%02d:%02d", etaSeconds / 3600, (etaSeconds % 3600) / 60, etaSeconds % 60);
-                                                Log.d("test", "run: " + eta);
+
+
                                                 // Afficher la vitesse de transfert dans la TextView
                                                 speedl.setText("Vitesse du téléchargement : " + String.format("%.1f", bytesPerSecond) + " MB/S");
                                                 // Mettre à jour le nombre d'octets téléchargés jusqu'à présent
                                                 bytesDownloaded[0] = downloadedBytes;
                                                 textView.setText("Téléchargement en cours... " + progress + "%");
                                                 progressdl.setProgress(progress);
-                                                handler.postDelayed(this, 50); // Vérifier à nouveau dans 50 milliseconde
+                                                handler.postDelayed(this, 1000); // Vérifier à nouveau dans 50 milliseconde
                                             }
                                         }
                                         cursor.close();
 
                                     }
                                 };
-                                handler.postDelayed(runnable, 50); // Vérifier l'état du téléchargement toutes les secondes
+                                handler.postDelayed(runnable, 1000); // Vérifier l'état du téléchargement toutes les secondes
                             }
 
                         }).setNegativeButton(
                         "Non",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Request request = new Request(Uri.parse(url));
-                                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                                long downloadId = downloadManager.enqueue(request);
-                                dialog.cancel();
-                                Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
-                                if (alert2 != null && alert2.isShowing()) { // Vérification que alert2 n'est pas null avant de l'utiliser
-                                    alert2.dismiss();
-                                    downloadManager.remove(downloadId);
+                        (dialog, id) -> {
 
-                                }
-                            }
+                            dialog.cancel();
+                            Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
+
                         });
 
 
                 AlertDialog alert = builder.create();
                 alert.show();
             }
+
             private void showNextDialog() {
-                    alert2.dismiss();
+                alert2.dismiss();
             }
         });
 
+
         ProgressBar myProgressBar = findViewById(R.id.progressBar);
+        EditText urlcontent = findViewById(R.id.UrlContent);
+        ImageView secureimage = findViewById(R.id.SecureImage);
+        urlcontent.setImeOptions(EditorInfo.IME_ACTION_GO);
+        urlcontent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String url = urlcontent.getText().toString();
+                    webView.loadUrl(url);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         webView.setWebViewClient(new WebViewClient() {
-            @Override
+
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 // Afficher la barre de progression
                 myProgressBar.setVisibility(View.VISIBLE);
@@ -234,18 +340,51 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                urlcontent.setText(url);
                 // Masquer la barre de progression
                 myProgressBar.setVisibility(View.GONE);
+
+                // Vérifier si la WebView peut naviguer vers l'avant
+                try {
+                    URL parsedUrl = new URL(url);
+                    String protocol = parsedUrl.getProtocol();
+                    if (protocol.equals("https")) {
+                        // Afficher l'icône de cadenas pour indiquer que le site est sécurisé
+                        secureimage.setImageResource(R.drawable.encrypted);
+                    } else {
+                        // Afficher une autre icône pour indiquer que le site n'est pas sécurisé
+                        secureimage.setImageResource(R.drawable.uncrypted);
+                    }
+                } catch (MalformedURLException e) {
+                    // La syntaxe de l'URL est incorrecte
+                    e.printStackTrace();
+                }
+
+                if (view.canGoForward()) {
+                    // Afficher le bouton "forward"
+                    nex.setVisibility(View.VISIBLE);
+                } else {
+                    // Masquer le bouton "forward"
+                    nex.setVisibility(View.GONE);
+                }
             }
 
         });
 
-        webView.loadUrl("https://google.com/");
         webView.setWebChromeClient(new WebChromeClient() {
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+
                 // Mettre à jour la barre de progression
                 myProgressBar.setProgress(newProgress);
+                // Vérifier si la valeur atteint 100
+                if (newProgress == 100) {
+                    // Réinitialiser la ProgressBar
+                    myProgressBar.setProgress(0);
+                    // Masquer la ProgressBar
+                    myProgressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -255,20 +394,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        webView.loadUrl("https://google.com/");
+
+
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
 
 
-        Button nex = findViewById(R.id.button);
-        nex.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (webView.canGoForward()) {
-                    webView.goForward();
-                }
-            }
-        });
+
         Button viewFav = findViewById(R.id.button6);
         viewFav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,15 +422,13 @@ public class MainActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Favoris enregistrés")
-                        .setItems(favoritesArray, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Gérer le clic sur un élément de la liste (par exemple, charger l'URL dans WebView)
-                                for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
-                                    if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
-                                        String url = entry.getKey();
-                                        webView.loadUrl(url);
-                                        break;
-                                    }
+                        .setItems(favoritesArray, (dialog, which) -> {
+                            // Gérer le clic sur un élément de la liste (par exemple, charger l'URL dans WebView)
+                            for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                                if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
+                                    String url = entry.getKey();
+                                    webView.loadUrl(url);
+                                    break;
                                 }
                             }
                         });
@@ -309,22 +441,19 @@ public class MainActivity extends AppCompatActivity {
 
         Button AddFav = findViewById(R.id.button5);
 
-        AddFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WebView webView = findViewById(R.id.webview);
-                String currentUrl = webView.getUrl();
-                String currentName = webView.getTitle();
-                SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(currentUrl, currentName);
-                editor.apply();
+        AddFav.setOnClickListener(v -> {
+            WebView webView1 = findViewById(R.id.webview);
+            String currentUrl = webView1.getUrl();
+            String currentName = webView1.getTitle();
+            SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(currentUrl, currentName);
+            editor.apply();
 
-                if (sharedPreferences.contains(currentName)) {
-                    Toast.makeText(getApplicationContext(), currentName + " est déjà enregistré.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), currentName + " à été enregistré.", Toast.LENGTH_SHORT).show();
-                }
+            if (sharedPreferences.contains(currentName)) {
+                Toast.makeText(getApplicationContext(), currentName + " est déjà enregistré.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), currentName + " à été enregistré.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -340,58 +469,62 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         }
 
+
         Button reloadButton = findViewById(R.id.button8); // assuming you have a Button with id "reload_button" in your layout
-        reloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                webView.reload(); // reload the web page
-            }
+        reloadButton.setOnClickListener(v -> {
+            webView.reload(); // reload the web page
         });
 
         Button remFav = findViewById(R.id.button7);
-        remFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String currentUrl = webView.getUrl();
-                String currentName = webView.getTitle();
-                SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
-                Map<String, ?> favoritesMap = sharedPreferences.getAll();
-                List<String> favoritesList = new ArrayList<>();
-                for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
-                    String url = entry.getKey();
-                    String name = entry.getValue().toString();
-                    String currentNamee = name + " : " + url;
-                    favoritesList.add(currentNamee);
-                }
-                final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
+        remFav.setOnClickListener(view -> {
+            String currentUrl = webView.getUrl();
+            String currentName = webView.getTitle();
+            SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+            Map<String, ?> favoritesMap = sharedPreferences.getAll();
+            List<String> favoritesList = new ArrayList<>();
+            for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                String url = entry.getKey();
+                String name = entry.getValue().toString();
+                String currentNamee = name + " : " + url;
+                favoritesList.add(currentNamee);
+            }
+            final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Supprimer un favori")
-                        .setItems(favoritesArray, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Supprimer le favori correspondant
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
-                                    if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
-                                        String url = entry.getKey();
-                                        editor.remove(url); // Supprimer le favori
-                                        editor.apply();
-                                        Toast.makeText(MainActivity.this, favoritesArray[which].split(" : ")[0] + " à été supprimé.", Toast.LENGTH_SHORT).show(); // Afficher le message toast
-                                        break;
-                                    }
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Supprimer un favori")
+                    .setItems(favoritesArray, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Supprimer le favori correspondant
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                                if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
+                                    String url = entry.getKey();
+                                    editor.remove(url); // Supprimer le favori
+                                    editor.apply();
+                                    Toast.makeText(MainActivity.this, favoritesArray[which].split(" : ")[0] + " à été supprimé.", Toast.LENGTH_SHORT).show(); // Afficher le message toast
+                                    break;
                                 }
                             }
-                        });
+                        }
+                    });
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
 
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putInt("selected_theme", selectedTheme).apply();
+    }
+    private void updateTheme() {
+        AppCompatDelegate.setDefaultNightMode(selectedTheme);
+        getDelegate().applyDayNight();
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putInt("selected_theme", selectedTheme).apply();
+    }
     private void showStartDialog() {
         Intent intent = new Intent(this, tuto_1.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -408,38 +541,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onDeleteDataClick(View view) {
-        WebView webView = findViewById(R.id.webview);
-        webView.clearCache(true);
-        webView.clearSslPreferences();
-        webView.clearFormData();
-        webView.clearHistory();
-        webView.clearMatches();
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", true);
-        editor.apply();
-        CookieManager.getInstance().removeAllCookies(null);
-        CookieManager.getInstance().flush();
-        // Supprimer les données enregistrées ici en utilisant les étapes décrites précédemment
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor.clear();
-        editor.commit();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation");
 
-        File filesDir = getFilesDir();
-        deleteRecursive(filesDir);
 
-        File cacheDir = getCacheDir();
-        deleteRecursive(cacheDir);
+        builder.setMessage("Êtes-vous certain de vouloir supprimer toutes les données de WebApper ?");
+builder.setCancelable(false);
+builder.setNegativeButton("NON", new DialogInterface.OnClickListener() {
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        Toast.makeText(getApplicationContext(), "Vos données n'ont pas été supprimées", Toast.LENGTH_SHORT).show();
+    }
+});
 
-        File externalFilesDir = getExternalFilesDir(null);
-        if (externalFilesDir != null) {
-            deleteRecursive(externalFilesDir);
-        }
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                WebView webView = findViewById(R.id.webview);
+                webView.clearCache(true);
+                webView.clearSslPreferences();
+                webView.clearFormData();
+                webView.clearHistory();
+                webView.clearMatches();
+                SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("firstStart", true);
+                editor.apply();
+                CookieManager.getInstance().removeAllCookies(null);
+                CookieManager.getInstance().flush();
+                // Supprimer les données enregistrées ici en utilisant les étapes décrites précédemment
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                editor.clear();
+                editor.apply();
+                SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+                SharedPreferences.Editor editorf = sharedPreferences.edit();
+                editorf.clear();
+                editorf.apply();
+                File filesDir = getFilesDir();
+                deleteRecursive(filesDir);
 
-        // Relancer l'activité ou l'application
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+                File cacheDir = getCacheDir();
+                deleteRecursive(cacheDir);
+
+                File externalFilesDir = getExternalFilesDir(null);
+                if (externalFilesDir != null) {
+                    deleteRecursive(externalFilesDir);
+                }
+
+                // Relancer l'activité ou l'application
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        builder.show();
+
+
+        // Le reste du code de votre activité principale
+
+
     }
 
     private void deleteRecursive(File fileOrDirectory) {
@@ -461,22 +622,6 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
-    }
-
 
     public void setAlert2(AlertDialog alert2) {
         this.alert2 = alert2;
