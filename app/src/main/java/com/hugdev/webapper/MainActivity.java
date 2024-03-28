@@ -57,7 +57,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -108,43 +107,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button soundButton = findViewById(R.id.soundButton);
-        soundButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Créer une boîte de dialogue avec trois options
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Choisir un thème");
+        soundButton.setOnClickListener(v -> {
+            // Créer une boîte de dialogue avec trois options
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Choisir un thème");
 
-                String[] options = {"Thème noir", "Thème blanc", "Thème auto de l'appareil"};
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Vérifier quelle option a été sélectionnée et mettre le thème correspondant
-                        switch (which) {
-                            case 0:
-                                Toast.makeText(getApplicationContext(), "Thème noir activé", Toast.LENGTH_SHORT).show();
-                                selectedTheme = R.style.Theme_WebApper_dark;
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                                updateTheme();
-                                break;
-                            case 1:
-                                Toast.makeText(getApplicationContext(), "Thème blanc activé", Toast.LENGTH_SHORT).show();
-                                selectedTheme = R.style.Theme_WebApper_light;
-                                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                                updateTheme();
-                                break;
-                            case 2:
-                                Toast.makeText(getApplicationContext(), "Thème auto de l'appareil activé", Toast.LENGTH_SHORT).show();
-                                selectedTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-                                updateTheme();
-                                break;
-                        }
-                    }
-                });
-                builder.show();
-            }
+            String[] options = {"Thème noir", "Thème blanc", "Thème auto de l'appareil"};
+            builder.setItems(options, (dialog, which) -> {
+                // Vérifier quelle option a été sélectionnée et mettre le thème correspondant
+                switch (which) {
+                    case 0:
+                        Toast.makeText(getApplicationContext(), "Thème noir activé", Toast.LENGTH_SHORT).show();
+                        selectedTheme = R.style.Theme_WebApper_dark;
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        updateTheme();
+                        break;
+                    case 1:
+                        Toast.makeText(getApplicationContext(), "Thème blanc activé", Toast.LENGTH_SHORT).show();
+                        selectedTheme = R.style.Theme_WebApper_light;
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        updateTheme();
+                        break;
+                    case 2:
+                        Toast.makeText(getApplicationContext(), "Thème auto de l'appareil activé", Toast.LENGTH_SHORT).show();
+                        selectedTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+                        updateTheme();
+                        break;
+                }
+            });
+            builder.show();
         });
         Button nex = findViewById(R.id.button);
         if (webView.canGoForward()) {
@@ -154,17 +147,13 @@ public class MainActivity extends AppCompatActivity {
             // Masquer le bouton "forward"
             nex.setVisibility(View.GONE);
         }
-        nex.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (webView.canGoForward()) {
-                    webView.goForward();
-                    nex.setVisibility(View.VISIBLE);
-                }else {
-                    nex.setVisibility(View.GONE);
-                }
+        nex.setOnClickListener(v -> {
+            if (webView.canGoForward()) {
+                webView.goForward();
+                nex.setVisibility(View.VISIBLE);
+            }else {
+                nex.setVisibility(View.GONE);
             }
-
         });
 
         webView.setDownloadListener(new DownloadListener() {
@@ -319,16 +308,13 @@ public class MainActivity extends AppCompatActivity {
         EditText urlcontent = findViewById(R.id.UrlContent);
         ImageView secureimage = findViewById(R.id.SecureImage);
         urlcontent.setImeOptions(EditorInfo.IME_ACTION_GO);
-        urlcontent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String url = urlcontent.getText().toString();
-                    webView.loadUrl(url);
-                    return true;
-                }
-                return false;
+        urlcontent.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String url = urlcontent.getText().toString();
+                webView.loadUrl(url);
+                return true;
             }
+            return false;
         });
 
         webView.setWebViewClient(new WebViewClient() {
@@ -404,38 +390,35 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button viewFav = findViewById(R.id.button6);
-        viewFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String currentUrl = webView.getUrl();
-                String currentName = webView.getTitle();
-                SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
-                Map<String, ?> favoritesMap = sharedPreferences.getAll();
-                List<String> favoritesList = new ArrayList<>();
-                for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
-                    String url = entry.getKey();
-                    String name = entry.getValue().toString();
-                    String currentNamee = name + " : " + url;
-                    favoritesList.add(currentNamee);
-                }
-                final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Favoris enregistrés")
-                        .setItems(favoritesArray, (dialog, which) -> {
-                            // Gérer le clic sur un élément de la liste (par exemple, charger l'URL dans WebView)
-                            for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
-                                if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
-                                    String url = entry.getKey();
-                                    webView.loadUrl(url);
-                                    break;
-                                }
-                            }
-                        });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
+        viewFav.setOnClickListener(view -> {
+            String currentUrl = webView.getUrl();
+            String currentName = webView.getTitle();
+            SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+            Map<String, ?> favoritesMap = sharedPreferences.getAll();
+            List<String> favoritesList = new ArrayList<>();
+            for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                String url = entry.getKey();
+                String name = entry.getValue().toString();
+                String currentNamee = name + " : " + url;
+                favoritesList.add(currentNamee);
             }
+            final String[] favoritesArray = favoritesList.toArray(new String[favoritesList.size()]);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Favoris enregistrés")
+                    .setItems(favoritesArray, (dialog, which) -> {
+                        // Gérer le clic sur un élément de la liste (par exemple, charger l'URL dans WebView)
+                        for (Map.Entry<String, ?> entry : favoritesMap.entrySet()) {
+                            if (entry.getValue().toString().equals(favoritesArray[which].split(" : ")[0])) {
+                                String url = entry.getKey();
+                                webView.loadUrl(url);
+                                break;
+                            }
+                        }
+                    });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
 
@@ -547,52 +530,44 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setMessage("Êtes-vous certain de vouloir supprimer toutes les données de WebApper ?");
 builder.setCancelable(false);
-builder.setNegativeButton("NON", new DialogInterface.OnClickListener() {
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        Toast.makeText(getApplicationContext(), "Vos données n'ont pas été supprimées", Toast.LENGTH_SHORT).show();
-    }
-});
+builder.setNegativeButton("NON", (dialog, which) -> Toast.makeText(getApplicationContext(), "Vos données n'ont pas été supprimées", Toast.LENGTH_SHORT).show());
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                WebView webView = findViewById(R.id.webview);
-                webView.clearCache(true);
-                webView.clearSslPreferences();
-                webView.clearFormData();
-                webView.clearHistory();
-                webView.clearMatches();
-                SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("firstStart", true);
-                editor.apply();
-                CookieManager.getInstance().removeAllCookies(null);
-                CookieManager.getInstance().flush();
-                // Supprimer les données enregistrées ici en utilisant les étapes décrites précédemment
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                editor.clear();
-                editor.apply();
-                SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
-                SharedPreferences.Editor editorf = sharedPreferences.edit();
-                editorf.clear();
-                editorf.apply();
-                File filesDir = getFilesDir();
-                deleteRecursive(filesDir);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            WebView webView = findViewById(R.id.webview);
+            webView.clearCache(true);
+            webView.clearSslPreferences();
+            webView.clearFormData();
+            webView.clearHistory();
+            webView.clearMatches();
+            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstStart", true);
+            editor.apply();
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+            // Supprimer les données enregistrées ici en utilisant les étapes décrites précédemment
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            editor.clear();
+            editor.apply();
+            SharedPreferences sharedPreferences = getSharedPreferences("Favoris", MODE_PRIVATE);
+            SharedPreferences.Editor editorf = sharedPreferences.edit();
+            editorf.clear();
+            editorf.apply();
+            File filesDir = getFilesDir();
+            deleteRecursive(filesDir);
 
-                File cacheDir = getCacheDir();
-                deleteRecursive(cacheDir);
+            File cacheDir = getCacheDir();
+            deleteRecursive(cacheDir);
 
-                File externalFilesDir = getExternalFilesDir(null);
-                if (externalFilesDir != null) {
-                    deleteRecursive(externalFilesDir);
-                }
-
-                // Relancer l'activité ou l'application
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+            File externalFilesDir = getExternalFilesDir(null);
+            if (externalFilesDir != null) {
+                deleteRecursive(externalFilesDir);
             }
+
+            // Relancer l'activité ou l'application
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         });
 
         builder.show();
