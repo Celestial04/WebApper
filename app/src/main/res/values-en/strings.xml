@@ -6,7 +6,6 @@
     <string name="forward_button">Avancer</string>
     <string name="google_button">Google</string>
     <string name="delete_data_button">Supprimer les données</string>
-    <string name="app_name" translatable="false">WebApper</string>
     <string name="next_button">OK</string>
     <string name="text_example_tuto">Faites défiler ce texte pour comprendre comment fonctionne le menu puis une fois que vous êtes prêt appuyez sur \"OK\".</string>
     <string name="body_tuto2">La sécurité, c\'est le plus important, et dans WebApper, vos activitées sur internet peuvent être effacé à tout moment et rapidement dans le menu.</string>
@@ -20,4 +19,6 @@
     <string name="view_fav">Voir les favoris d\'enregistrées</string>
     <string name="delete_fav_button">Supprimer un favori d\'enregistré</string>
     <string name="refresh_button">Recharger</string>
+    <string name="btn_chg_color">Change theme</string>
+    <string name="changer_la_couleur">Change color</string>
 </resources>

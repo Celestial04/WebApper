@@ -2,6 +2,8 @@ package com.hugdev.webapper;
 
 import static android.app.usage.UsageEvents.Event.NONE;
 
+import static com.google.android.material.color.DynamicColors.applyIfAvailable;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +29,7 @@ public class tuto_1 extends AppCompatActivity {
             selectedTheme = savedTheme;
         }
         setTheme(selectedTheme);
-        DynamicColors.applyIfAvailable(this);
+        applyIfAvailable(this);
         setContentView(R.layout.tuto_1);
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
 
@@ -59,6 +61,7 @@ public class tuto_1 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         finish();
     }
 
