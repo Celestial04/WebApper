@@ -21,4 +21,7 @@
     <string name="refresh_button">Recharger</string>
     <string name="btn_chg_color">Change theme</string>
     <string name="changer_la_couleur">Change color</string>
+    <string name="t_l_chargement_en_cours">Downloading...</string>
+    <string name="vitesse_du_tl_chargement">Download speed:</string>
+    <string name="le_tl_chargement_de">The download of</string>
 </resources>

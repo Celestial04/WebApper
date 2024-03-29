@@ -9,6 +9,8 @@ import static android.app.DownloadManager.STATUS_FAILED;
 import static android.app.DownloadManager.STATUS_SUCCESSFUL;
 import static android.app.usage.UsageEvents.Event.NONE;
 
+import static com.hugdev.webapper.R.string.vitesse_du_tl_chargement;
+
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.DialogInterface;
@@ -29,6 +31,7 @@ import android.webkit.DownloadListener;
 import android.webkit.GeolocationPermissions;
 import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -44,17 +47,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.color.DynamicColors;
-import com.google.android.play.core.appupdate.AppUpdateInfo;
-import com.google.android.play.core.appupdate.AppUpdateManager;
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
-import com.google.android.play.core.install.model.AppUpdateType;
-import com.google.android.play.core.install.model.UpdateAvailability;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -77,27 +75,15 @@ public class MainActivity extends AppCompatActivity {
         DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
         DynamicColors.applyToActivitiesIfAvailable(getApplication());
         setContentView(R.layout.activity_main);
-        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
 
-// Returns an intent object that you use to check for an update.
-        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
-
-// Checks that the platform will allow the specified type of update.
-        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE);
-            }// This example applies an immediate update. To apply a flexible update
-// instead, pass in AppUpdateType.FLEXIBLE
-// Request the update.
-        });
         HorizontalScrollView scroll = findViewById(R.id.scroll);
         scroll.fullScroll(View.FOCUS_DOWN);
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                view.loadUrl("https://google.com");
                 return true;
 
 
@@ -185,8 +171,8 @@ public class MainActivity extends AppCompatActivity {
                                 // Ajouter un TextView pour afficher les statistiques de téléchargement
                                 TextView textView = new TextView(MainActivity.this);
                                 TextView speedl = new TextView(MainActivity.this);
-                                textView.setText("Téléchargement en cours...");
-                                speedl.setText("Vitesse du téléchargement :");
+                                textView.setText(R.string.t_l_chargement_en_cours);
+                                speedl.setText(vitesse_du_tl_chargement);
                                 speedl.setTextSize(14);
                                 textView.setTextSize(20);
 
@@ -207,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                     downloadManager.remove(downloadId); // Annuler le téléchargement
-                                    Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " a été annulé.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), getString(R.string.le_tl_chargement_de) + fileName + " a été annulé.", Toast.LENGTH_SHORT).show();
                                     showNextDialog();
                                 });
 
@@ -216,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                                 builder2.setPositiveButton("Annuler le téléchargement", (dialog1, id1) -> {
                                     downloadManager.remove(downloadId);
                                     dialog1.cancel();
-                                    Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), getString(R.string.le_tl_chargement_de) + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
                                     if (alert2 != null && alert2.isShowing()) { // Vérification que alert2 n'est pas null avant de l'utiliser
                                         alert2.dismiss();
                                         dialog1.dismiss();
@@ -246,10 +232,10 @@ public class MainActivity extends AppCompatActivity {
                                             int status = cursor.getInt(columnIndex);
                                             if (status == STATUS_SUCCESSFUL) {
                                                 alert2.dismiss(); // Fermer le AlertDialog affichant les statistiques
-                                                Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " est terminé.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), getString(R.string.le_tl_chargement_de) + fileName + " est terminé.", Toast.LENGTH_SHORT).show();
                                             } else if (status == STATUS_FAILED) {
                                                 alert2.dismiss(); // Fermer le AlertDialog affichant les statistiques
-                                                Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " a échoué.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), getString(R.string.le_tl_chargement_de) + fileName + " a échoué.", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 @SuppressLint("Range") int downloadedBytes = cursor.getInt(cursor.getColumnIndex(COLUMN_BYTES_DOWNLOADED_SO_FAR));
                                                 @SuppressLint("Range") int bytesTotal = cursor.getInt(cursor.getColumnIndex(COLUMN_TOTAL_SIZE_BYTES));
@@ -263,10 +249,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                                                 // Afficher la vitesse de transfert dans la TextView
-                                                speedl.setText("Vitesse du téléchargement : " + String.format("%.1f", bytesPerSecond) + " MB/S");
+                                                speedl.setText(MessageFormat.format("{0}{1} MB/S", vitesse_du_tl_chargement, String.format("%.1f", bytesPerSecond)));
                                                 // Mettre à jour le nombre d'octets téléchargés jusqu'à présent
                                                 bytesDownloaded[0] = downloadedBytes;
-                                                textView.setText("Téléchargement en cours... " + progress + "%");
+                                                textView.setText(R.string.t_l_chargement_en_cours + progress + "%");
                                                 progressdl.setProgress(progress);
                                                 handler.postDelayed(this, 1000); // Vérifier à nouveau dans 50 milliseconde
                                             }
@@ -283,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                         (dialog, id) -> {
 
                             dialog.cancel();
-                            Toast.makeText(getApplicationContext(), "Le téléchargement de " + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.le_tl_chargement_de) + fileName + " à été annulé.", Toast.LENGTH_SHORT).show();
 
                         });
 
