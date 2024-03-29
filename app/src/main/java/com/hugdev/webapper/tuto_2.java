@@ -27,7 +27,7 @@ public class tuto_2 extends AppCompatActivity {
             selectedTheme = savedTheme;
         }
         setTheme(selectedTheme);
-        DynamicColors.applyIfAvailable(this);
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
         setContentView(R.layout.tuto_2);
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
 

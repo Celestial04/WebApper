@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.CookieManager;
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             selectedTheme = savedTheme;
         }
         setTheme(selectedTheme);
-        DynamicColors.applyIfAvailable(this);
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
         DynamicColors.applyToActivitiesIfAvailable(getApplication());
         setContentView(R.layout.activity_main);
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
@@ -110,29 +109,24 @@ public class MainActivity extends AppCompatActivity {
         soundButton.setOnClickListener(v -> {
             // Créer une boîte de dialogue avec trois options
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Choisir un thème");
+            builder.setTitle("Choisissez un thème");
 
-            String[] options = {"Thème noir", "Thème blanc", "Thème auto de l'appareil"};
+            String[] options = {"Thème sombre", "Thème clair"};
             builder.setItems(options, (dialog, which) -> {
                 // Vérifier quelle option a été sélectionnée et mettre le thème correspondant
                 switch (which) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), "Thème noir activé", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Thème sombre activé", Toast.LENGTH_SHORT).show();
                         selectedTheme = R.style.Theme_WebApper_dark;
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         updateTheme();
                         break;
                     case 1:
-                        Toast.makeText(getApplicationContext(), "Thème blanc activé", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Thème clair activé", Toast.LENGTH_SHORT).show();
                         selectedTheme = R.style.Theme_WebApper_light;
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        updateTheme();
-                        break;
-                    case 2:
-                        Toast.makeText(getApplicationContext(), "Thème auto de l'appareil activé", Toast.LENGTH_SHORT).show();
-                        selectedTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
                         updateTheme();
                         break;
                 }
