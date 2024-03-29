@@ -5,7 +5,7 @@ Vous avez besoin d'aller chercher un paramètre spécifique sans avoir à navigu
  - L'auto remplissage fonctionne, donc vous n'aurez pas besoin de retaper votre mot de passe enregistré dans votre compte google, le clavier s'en charge.
  - Les couleurs sont personnalisables.
 # Téléchargements
-- [Versions stables](https://github.com/hugococa2004/WebApper/releases): builds signé, ils sont publiées moins rapidement, ont moins de bugs que les versions de développements mais sont des versions plus sûres.
+- [Versions stables](https://github.com/hugococa2004/WebApper/releases): builds signé, ils sont publiées moins rapidement et ont moins de bugs que les versions de développements mais sont des versions plus sûres.
 - [Versions de développements](https://github.com/hugococa2004/WebApper/actions?query=is%3Asuccess): builds qui sont exécuté via GitHub Action lorsque un fichier à été modifié, donc les builds peuvent contenir des bugs, ou peuvent ne pas se lancer ou avoir un problème lors de l'installation, toute fois ces builds peuvent aussi contenir de nouvelles fonctionnalités ou renforcer la sécurité de l'application.
 > [!IMPORTANT]
 > Le seul moyen de télécharger l'application pour l'instant est uniquement de télécharger l'APK sur GitHub.
