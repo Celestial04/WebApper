@@ -1,15 +1,8 @@
 package com.hugdev.webapper;
 
-import static android.app.DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR;
-import static android.app.DownloadManager.COLUMN_STATUS;
-import static android.app.DownloadManager.COLUMN_TOTAL_SIZE_BYTES;
 import static android.app.DownloadManager.Query;
 import static android.app.DownloadManager.Request;
-import static android.app.DownloadManager.STATUS_FAILED;
-import static android.app.DownloadManager.STATUS_SUCCESSFUL;
 import static android.app.usage.UsageEvents.Event.NONE;
-
-import static com.hugdev.webapper.R.string.vitesse_du_tl_chargement;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
@@ -52,14 +45,26 @@ import com.google.android.material.color.DynamicColors;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
     private AlertDialog alert2;
     private int selectedTheme;
+    // Méthode pour formater le temps en heures, minutes et secondes
+// Méthode pour formater le temps en heures, minutes et secondes
+// Méthode pour formater le temps en heures, minutes et secondes
+    private String formatDuration(long seconds) {
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long secs = seconds % 60;
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
+    }
+
+
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -70,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         int savedTheme = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getInt("selected_theme", NONE);
         if (savedTheme != NONE) {
             selectedTheme = savedTheme;
+        }else{
+            selectedTheme = R.style.Theme_WebApper_dark;
         }
         setTheme(selectedTheme);
         DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
@@ -136,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         webView.setDownloadListener(new DownloadListener() {
             final List<AlertDialog.Builder> dialogsList = new ArrayList<>();
 
@@ -162,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                                 AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
                                 dialogsList.add(builder2);
                                 builder2.setTitle("Téléchargement en cours...");
-                                builder2.setMessage("");
+                                builder2.setMessage("Téléchargement de votre fichier en cours...");
                                 builder2.setCancelable(false);
                                 LinearLayout layout = new LinearLayout(MainActivity.this);
                                 layout.setOrientation(LinearLayout.VERTICAL);
@@ -171,13 +179,16 @@ public class MainActivity extends AppCompatActivity {
                                 // Ajouter un TextView pour afficher les statistiques de téléchargement
                                 TextView textView = new TextView(MainActivity.this);
                                 TextView speedl = new TextView(MainActivity.this);
+                                TextView textViewETA = new TextView(MainActivity.this); // Ajouter un TextView pour afficher l'ETA
                                 textView.setText(R.string.t_l_chargement_en_cours);
-                                speedl.setText(vitesse_du_tl_chargement);
+                                speedl.setText("Vitesse : 0.0 MB/s"); // Mettez la valeur de la vitesse du téléchargement correcte ici
+                                textViewETA.setText("ETA: Calculating..."); // Initialiser l'ETA avec un message par défaut
                                 speedl.setTextSize(14);
                                 textView.setTextSize(20);
 
                                 layout.addView(textView);
                                 layout.addView(speedl);
+                                layout.addView(textViewETA); // Ajouter le TextView ETA
                                 // Ajouter un bouton "Annuler"
                                 Button cancelButton = new Button(MainActivity.this);
                                 cancelButton.setText("Annuler");
@@ -211,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
 
-                                AlertDialog alert2 = builder2.create();
+                                alert2 = builder2.create();
                                 dialog.dismiss();
                                 alert2.show();
 
@@ -228,33 +239,38 @@ public class MainActivity extends AppCompatActivity {
                                         query.setFilterById(downloadId);
                                         Cursor cursor = downloadManager.query(query);
                                         if (cursor.moveToFirst()) {
-                                            int columnIndex = cursor.getColumnIndex(COLUMN_STATUS);
+                                            int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
                                             int status = cursor.getInt(columnIndex);
-                                            if (status == STATUS_SUCCESSFUL) {
+                                            if (status == DownloadManager.STATUS_SUCCESSFUL) {
                                                 alert2.dismiss(); // Fermer le AlertDialog affichant les statistiques
                                                 Toast.makeText(getApplicationContext(), getString(R.string.le_tl_chargement_de) + fileName + " est terminé.", Toast.LENGTH_SHORT).show();
-                                            } else if (status == STATUS_FAILED) {
+                                            } else if (status == DownloadManager.STATUS_FAILED) {
                                                 alert2.dismiss(); // Fermer le AlertDialog affichant les statistiques
                                                 Toast.makeText(getApplicationContext(), getString(R.string.le_tl_chargement_de) + fileName + " a échoué.", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                @SuppressLint("Range") int downloadedBytes = cursor.getInt(cursor.getColumnIndex(COLUMN_BYTES_DOWNLOADED_SO_FAR));
-                                                @SuppressLint("Range") int bytesTotal = cursor.getInt(cursor.getColumnIndex(COLUMN_TOTAL_SIZE_BYTES));
-                                                int progress = (int) ((bytesDownloaded[0] * 100L) / bytesTotal);
+                                                @SuppressLint("Range") int downloadedBytes = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                                                @SuppressLint("Range") int bytesTotal = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+                                                int progress = (int) ((downloadedBytes * 100L) / (double) bytesTotal);
+
                                                 long elapsedTime = System.currentTimeMillis() - startTime;
                                                 double bytesPerSecond = (downloadedBytes - bytesDownloaded[0]) * 1000.0 / elapsedTime / 1000000.0;
 
                                                 // Calculer l'ETA
-                                                int bytesRemaining = bytesTotal - bytesDownloaded[0];
+                                                int bytesRemaining = bytesTotal - downloadedBytes;
                                                 long etaSeconds = (long) (bytesRemaining / bytesPerSecond);
+                                                String etaFormatted = formatDuration(etaSeconds);
+                                                textViewETA.setText("ETA : " + etaFormatted);
+
 
 
                                                 // Afficher la vitesse de transfert dans la TextView
-                                                speedl.setText(MessageFormat.format("{0}{1} MB/S", vitesse_du_tl_chargement, String.format("%.1f", bytesPerSecond)));
+                                                speedl.setText("Vitesse : " + String.format("%.1f", bytesPerSecond) + " MB/s");
                                                 // Mettre à jour le nombre d'octets téléchargés jusqu'à présent
                                                 bytesDownloaded[0] = downloadedBytes;
-                                                textView.setText(R.string.t_l_chargement_en_cours + progress + "%");
-                                                progressdl.setProgress(progress);
-                                                handler.postDelayed(this, 1000); // Vérifier à nouveau dans 50 milliseconde
+                                                textView.setText(getString(R.string.t_l_chargement_en_cours) + Math.abs(progress) + "%");
+
+                                                progressdl.setProgress(Math.abs(progress));
+                                                handler.postDelayed(this, 500); // Vérifier à nouveau dans 50 millisecondes
                                             }
                                         }
                                         cursor.close();
@@ -279,7 +295,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             private void showNextDialog() {
-                alert2.dismiss();
+                if (alert2 != null && alert2.isShowing()) {
+                    alert2.dismiss();
+                }
             }
         });
 

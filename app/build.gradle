@@ -14,8 +14,8 @@ android {
         applicationId "com.hugdev.webapper"
         minSdk 24
         targetSdk 34
-        versionCode 6
-        versionName "3.0.1"
+        versionCode 7
+        versionName "3.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
