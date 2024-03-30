@@ -23,8 +23,11 @@ public class tuto_1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int savedTheme = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getInt("selected_theme", NONE);
+
         if (savedTheme != NONE) {
             selectedTheme = savedTheme;
+        }else{
+            selectedTheme = R.style.Theme_WebApper_dark;
         }
         setTheme(selectedTheme);
         DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
