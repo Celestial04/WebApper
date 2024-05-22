@@ -25,6 +25,12 @@
     <string name="vitesse_du_tl_chargement">Vitesse du téléchargement :</string>
     <string name="le_tl_chargement_de">"Le téléchargement de "</string>
     <dimen name="SizeMenubtn">35dp</dimen>
+    <string-array name="position_options">
+        <item>Top</item>
+        <item>Bottom</item>
+        <item>Left</item>
+        <item>Right</item>
+    </string-array>
     <dimen name="SizeMenu">45dp</dimen>
 
 </resources>

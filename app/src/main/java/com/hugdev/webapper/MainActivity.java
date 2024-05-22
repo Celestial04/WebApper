@@ -51,7 +51,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    private HorizontalScrollView scroll;
     private AlertDialog alert2;
     private int selectedTheme;
     // Méthode pour formater le temps en heures, minutes et secondes
@@ -72,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        scroll = findViewById(R.id.scroll);
+
+
+
+
         int savedTheme = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getInt("selected_theme", NONE);
         if (savedTheme != NONE) {
             selectedTheme = savedTheme;
@@ -82,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
         DynamicColors.applyToActivitiesIfAvailable(getApplication());
         setContentView(R.layout.activity_main);
-
+        Button topButton = findViewById(R.id.topButton);
+        Button bottomButton = findViewById(R.id.bottomButton);
+        Button leftButton = findViewById(R.id.leftButton);
+        Button rightButton = findViewById(R.id.rightButton);
         HorizontalScrollView scroll = findViewById(R.id.scroll);
         scroll.fullScroll(View.FOCUS_DOWN);
         WebView webView = findViewById(R.id.webview);
@@ -97,7 +105,33 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        topButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scroll.scrollTo(0, 0); // Scroll to left
+            }
+        });
 
+        bottomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scroll.scrollTo(0, scroll.getChildAt(0).getHeight()); // Scroll to right
+            }
+        });
+
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scroll.scrollTo(0, 0); // Scroll to top
+            }
+        });
+
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scroll.scrollTo(scroll.getChildAt(0).getWidth(), 0); // Scroll to bottom
+            }
+        });
         Button soundButton = findViewById(R.id.soundButton);
         soundButton.setOnClickListener(v -> {
             // Créer une boîte de dialogue avec trois options

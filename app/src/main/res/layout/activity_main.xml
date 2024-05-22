@@ -22,6 +22,7 @@
             android:layout_weight="95" />
 
         <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7">
@@ -145,6 +146,29 @@
                 </HorizontalScrollView>
             </LinearLayout>
         </ScrollView>
+        <Button
+            android:id="@+id/topButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top" />
+
+        <Button
+            android:id="@+id/bottomButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bottom" />
+
+        <Button
+            android:id="@+id/leftButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Left" />
+
+        <Button
+            android:id="@+id/rightButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Right" />
 
         <ProgressBar
             android:id="@+id/progressBar"
