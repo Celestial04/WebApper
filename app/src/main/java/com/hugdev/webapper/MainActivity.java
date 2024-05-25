@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         Button bottomButton = findViewById(R.id.bottomButton);
         Button leftButton = findViewById(R.id.leftButton);
         Button rightButton = findViewById(R.id.rightButton);
-        HorizontalScrollView scroll = findViewById(R.id.scroll);
+        LinearLayout linearLayout2 = findViewById(R.id.scrollvv);
         scroll.fullScroll(View.FOCUS_DOWN);
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -108,30 +108,35 @@ public class MainActivity extends AppCompatActivity {
         topButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scroll.scrollTo(0, 0); // Scroll to left
+                // Scroll to the top
+                scroll.fullScroll(View.FOCUS_UP);
             }
         });
 
         bottomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scroll.scrollTo(0, scroll.getChildAt(0).getHeight()); // Scroll to right
+                // Scroll to the bottom
+                scroll.fullScroll(View.FOCUS_DOWN);
             }
         });
 
         leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scroll.scrollTo(0, 0); // Scroll to top
+                // Scroll to the left
+                scroll.fullScroll(View.FOCUS_LEFT);
             }
         });
 
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scroll.scrollTo(scroll.getChildAt(0).getWidth(), 0); // Scroll to bottom
+                // Scroll to the right
+                scroll.fullScroll(View.FOCUS_RIGHT);
             }
         });
+
         Button soundButton = findViewById(R.id.soundButton);
         soundButton.setOnClickListener(v -> {
             // Créer une boîte de dialogue avec trois options
