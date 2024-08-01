@@ -16,5 +16,5 @@ Pour utiliser les builds stables les plus récentes, **veuillez utiliser les APK
 # to-do
 - [ ] Raccourcis des favoris directement dans le Menu
 - [ ] Possibilité de modifier la position du Menu
-- [ ] Régler le bug de la progression négative ou inexacte de la pop-up d'un téléchargement
+- [x] Régler le bug de la progression négative ou inexacte de la pop-up d'un téléchargement
 - [ ] Régler le bug du thème
