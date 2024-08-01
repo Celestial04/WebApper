@@ -1,4 +1,4 @@
-package com.hugdev.webapper;
+package com.bouillie.web;
 
 import static android.app.DownloadManager.Query;
 import static android.app.DownloadManager.Request;

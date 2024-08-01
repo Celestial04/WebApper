@@ -1,10 +1,10 @@
-package com.hugdev.webapper;
+package com.bouillie.web;
 
 import static android.app.usage.UsageEvents.Event.NONE;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,13 +18,12 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 
-public class tuto_1 extends AppCompatActivity {
+public class tuto_3 extends AppCompatActivity {
     private int selectedTheme;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int savedTheme = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getInt("selected_theme", NONE);
-
         if (savedTheme != NONE) {
             selectedTheme = savedTheme;
         }else{
@@ -32,7 +31,8 @@ public class tuto_1 extends AppCompatActivity {
         }
         setTheme(selectedTheme);
         DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
-        setContentView(R.layout.tuto_1);
+        setContentView(R.layout.tuto_3);
+
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
 
 // Returns an intent object that you use to check for an update.
@@ -46,30 +46,17 @@ public class tuto_1 extends AppCompatActivity {
 // instead, pass in AppUpdateType.FLEXIBLE
 // Request the update.
         });
-        DynamicColors.applyToActivitiesIfAvailable(getApplication());
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-
-        }
-        Button btn = findViewById(R.id.button4);
-        btn.setOnClickListener(v -> {
-            Intent intent = new Intent(tuto_1.this, tuto_2.class);
+        Button button = findViewById(R.id.button4);
+        button.setOnClickListener(v -> {
+            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstStart", false);
+            editor.apply();
+            Intent intent = new Intent(tuto_3.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         });
-    }
-
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LOW_PROFILE);
-        }
 
     }
 

@@ -1,4 +1,4 @@
-package com.hugdev.webapper;
+package com.bouillie.web;
 
 import static android.app.usage.UsageEvents.Event.NONE;
 
