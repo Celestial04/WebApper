@@ -4,6 +4,8 @@ import static android.app.DownloadManager.Query;
 import static android.app.DownloadManager.Request;
 import static android.app.usage.UsageEvents.Event.NONE;
 
+import static com.boullie.web.R.*;
+
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.DialogInterface;
@@ -105,6 +107,28 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        Button changeUrlButton = findViewById(R.id.changeUrlButton);
+        changeUrlButton.setOnClickListener(v -> {
+            String currentUrl = webView.getUrl();
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Change URL");
+
+            final EditText input = new EditText(MainActivity.this);
+            input.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_URI);
+            input.setText(currentUrl);
+            builder.setView(input);
+
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                String newUrl = input.getText().toString();
+                webView.loadUrl(newUrl);
+            });
+
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+            builder.show();
+        });
+
 
         Button soundButton = findViewById(R.id.soundButton);
         soundButton.setOnClickListener(v -> {
@@ -311,17 +335,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         ProgressBar myProgressBar = findViewById(R.id.progressBar);
-        EditText urlcontent = findViewById(R.id.UrlContent);
+        TextView urlContent  = findViewById(R.id.textView);;
         ImageView secureimage = findViewById(R.id.SecureImage);
-        urlcontent.setImeOptions(EditorInfo.IME_ACTION_GO);
-        urlcontent.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_SEARCH) {
-                String url = urlcontent.getText().toString();
-                webView.loadUrl(url);
-                return true;
-            }
-            return false;
-        });
+
 
         webView.setWebViewClient(new WebViewClient() {
 
@@ -332,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                urlcontent.setText(url);
+                urlContent.setText(url);
                 // Masquer la barre de progression
                 myProgressBar.setVisibility(View.GONE);
 
@@ -521,6 +537,8 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+
+
     private void FirstStart() {
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -610,4 +628,5 @@ builder.setNegativeButton("NON", (dialog, which) -> Toast.makeText(getApplicatio
         this.alert2 = alert2;
     }
 }
+
 

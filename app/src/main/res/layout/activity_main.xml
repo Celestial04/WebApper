@@ -33,18 +33,11 @@
                     android:layout_height="35dp"
                     app:srcCompat="@android:drawable/ic_menu_info_details" />
 
-                <EditText
-                    android:id="@+id/UrlContent"
+                <TextView
+                    android:id="@+id/textView"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:fontFamily="sans-serif-black"
-                    android:hapticFeedbackEnabled="true"
-                    android:hint="https://..."
-                    android:imeOptions="actionGo"
-                    android:inputType="textUri"
-                    android:minHeight="48dp"
-                    android:singleLine="true"
-                    android:textSize="14sp" />
+                    android:layout_height="match_parent"
+                    android:text="TextView" />
 
             </LinearLayout>
 
@@ -85,17 +78,22 @@
 
                             <Button
                                 android:id="@+id/changeUrlButton"
+                                style="@style/Widget.Material3.Button"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="10dp"
                                 android:layout_weight="1"
-                                android:text="Button" />
+                                android:text="Changer l'URL"
+                                app:icon="@android:drawable/ic_menu_preferences" />
 
                             <Button
                                 android:id="@+id/button"
+                                style="@style/Widget.Material3.Button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/forward_button"
+                                android:text="Page précédente"
                                 app:icon="@drawable/baseline_arrow_circle_right_24"
                                 app:iconGravity="textEnd"
                                 app:iconPadding="0dp"
@@ -107,6 +105,7 @@
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/refresh_button"
+                                android:text="Recharger la page"
                                 app:icon="@drawable/baseline_refresh_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
@@ -116,6 +115,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
+                                android:text="Favoris enregistrés"
                                 app:icon="@drawable/baseline_bookmarks_24"
                                 app:iconGravity="textEnd"
                                 app:iconPadding="0dp"
@@ -127,6 +127,7 @@
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/favorite_button_add"
+                                android:text="Ajouter un favoris"
                                 app:icon="@drawable/baseline_bookmark_add_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
@@ -137,6 +138,7 @@
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/delete_fav_button"
+                                android:text="Supprimer un favoris"
                                 app:icon="@drawable/baseline_bookmark_remove_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
@@ -147,6 +149,7 @@
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/changer_la_couleur"
+                                android:text="Changer le thème (INSTABLE)"
                                 app:icon="@drawable/baseline_palette_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
@@ -156,6 +159,7 @@
                                 android:layout_height="@dimen/SizeMenu"
                                 android:contentDescription="@string/delete_data_button"
                                 android:onClick='onDeleteDataClick'
+                                android:text="Supprimer toutes les données"
                                 app:icon="@drawable/baseline_delete_forever_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
