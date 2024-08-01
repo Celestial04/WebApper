@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.boullie.web.R;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
