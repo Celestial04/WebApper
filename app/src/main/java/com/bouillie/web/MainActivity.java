@@ -52,6 +52,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
     private HorizontalScrollView scroll;
     private AlertDialog alert2;
     private int selectedTheme;
@@ -93,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         Button leftButton = findViewById(R.id.leftButton);
         Button rightButton = findViewById(R.id.rightButton);
         LinearLayout linearLayout2 = findViewById(R.id.scrollvv);
-        scroll.fullScroll(View.FOCUS_DOWN);
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
