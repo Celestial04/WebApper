@@ -8,7 +8,7 @@ android {
         }
     }
     namespace 'com.boullie.web'
-    compileSdk 35
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.boullie.web"

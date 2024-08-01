@@ -21,7 +21,7 @@
             android:name=".tuto_3"
             android:exported="false" />
         <activity
-            android:name=".tuto_2"
+            android:name="@"
             android:exported="false" />
         <activity
             android:name=".tuto_1"
