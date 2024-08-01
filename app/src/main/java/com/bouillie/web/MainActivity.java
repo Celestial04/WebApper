@@ -106,37 +106,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        topButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Scroll to the top
-                scroll.fullScroll(View.FOCUS_UP);
-            }
-        });
-
-        bottomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Scroll to the bottom
-                scroll.fullScroll(View.FOCUS_DOWN);
-            }
-        });
-
-        leftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Scroll to the left
-                scroll.fullScroll(View.FOCUS_LEFT);
-            }
-        });
-
-        rightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Scroll to the right
-                scroll.fullScroll(View.FOCUS_RIGHT);
-            }
-        });
 
         Button soundButton = findViewById(R.id.soundButton);
         soundButton.setOnClickListener(v -> {
