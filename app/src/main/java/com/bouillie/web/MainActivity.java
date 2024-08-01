@@ -53,6 +53,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private HorizontalScrollView scroll;
     private AlertDialog alert2;
     private int selectedTheme;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         long secs = seconds % 60;
         return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs);
     }
+
 
 
 
@@ -89,10 +91,7 @@ public class MainActivity extends AppCompatActivity {
         DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
         DynamicColors.applyToActivitiesIfAvailable(getApplication());
         setContentView(R.layout.activity_main);
-        Button topButton = findViewById(R.id.topButton);
-        Button bottomButton = findViewById(R.id.bottomButton);
-        Button leftButton = findViewById(R.id.leftButton);
-        Button rightButton = findViewById(R.id.rightButton);
+
         LinearLayout linearLayout2 = findViewById(R.id.scrollvv);
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -604,6 +603,8 @@ builder.setNegativeButton("NON", (dialog, which) -> Toast.makeText(getApplicatio
             super.onBackPressed();
         }
     }
+
+
 
     public void setAlert2(AlertDialog alert2) {
         this.alert2 = alert2;
