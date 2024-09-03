@@ -1,4 +1,4 @@
-https://img.shields.io/github/release/Celestial04/WebApper.svg?logo=github 
+![](https://img.shields.io/github/release/Celestial04/WebApper.svg?logo=github)
 # WebApper est un navigateur simple a utiliser, sécurisé, privé, et open-source.
 Vous avez besoin d'aller chercher un paramètre spécifique sans avoir à naviguer a travers des menus ? WebApper est là.
 
