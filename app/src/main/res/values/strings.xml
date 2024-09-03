@@ -24,6 +24,14 @@
     <string name="t_l_chargement_en_cours">Téléchargement en cours…</string>
     <string name="vitesse_du_tl_chargement">Vitesse du téléchargement :</string>
     <string name="le_tl_chargement_de">"Le téléchargement de "</string>
+    <string name="reset_app">Supprimer toutes les données</string>
+    <string name="previous_page">Page précédente</string>
+    <string name="change_url_btn">Changer l\'URL</string>
+    <string name="reload_page_btn">Recharger la page</string>
+    <string name="saved_pages_btn">Favoris enregistrés</string>
+    <string name="add_fav_btn">Ajouter un favoris</string>
+    <string name="delete_fav_btn">Supprimer un favoris</string>
+    <string name="change_theme_btn">Changer le thème (INSTABLE)</string>
     <dimen name="SizeMenubtn">35dp</dimen>
     <string-array name="position_options">
         <item>Top</item>

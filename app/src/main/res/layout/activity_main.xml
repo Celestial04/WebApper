@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="false">
 
     <FrameLayout
         style="@style/Theme.Material3.DynamicColors.DayNight"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="?attr/colorOnPrimaryContainer"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/scrollvv"
@@ -24,6 +28,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/colorErrorContainer"
                 android:orientation="horizontal"
                 tools:visibility="visible">
 
@@ -31,13 +36,18 @@
                     android:id="@+id/SecureImage"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    app:srcCompat="@android:drawable/ic_menu_info_details" />
+                    android:importantForAccessibility="no"
+                    app:srcCompat="@android:drawable/ic_menu_info_details"
+                    tools:ignore="ImageContrastCheck" />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="?attr/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
@@ -68,9 +78,11 @@
                         android:layout_weight="4"
                         android:background="#00000000"
                         android:fadeScrollbars="true"
-                        android:fitsSystemWindows="true">
+                        android:fitsSystemWindows="true"
+                        tools:ignore="UselessParent">
 
                         <LinearLayout
+                            style="?android:attr/buttonBarStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="bottom|end"
@@ -78,22 +90,22 @@
 
                             <Button
                                 android:id="@+id/changeUrlButton"
-                                style="@style/Widget.Material3.Button"
-                                android:layout_width="wrap_content"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="10dp"
                                 android:layout_weight="1"
-                                android:text="Changer l'URL"
+                                android:text="@string/change_url_btn"
                                 app:icon="@android:drawable/ic_menu_preferences" />
 
                             <Button
                                 android:id="@+id/button"
-                                style="@style/Widget.Material3.Button"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/forward_button"
-                                android:text="Page précédente"
+                                android:text="@string/previous_page"
                                 app:icon="@drawable/baseline_arrow_circle_right_24"
                                 app:iconGravity="textEnd"
                                 app:iconPadding="0dp"
@@ -101,21 +113,23 @@
 
                             <Button
                                 android:id="@+id/button8"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/refresh_button"
-                                android:text="Recharger la page"
+                                android:text="@string/reload_page_btn"
                                 app:icon="@drawable/baseline_refresh_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
 
                             <Button
                                 android:id="@+id/button6"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
-                                android:text="Favoris enregistrés"
+                                android:text="@string/saved_pages_btn"
                                 app:icon="@drawable/baseline_bookmarks_24"
                                 app:iconGravity="textEnd"
                                 app:iconPadding="0dp"
@@ -123,43 +137,47 @@
 
                             <Button
                                 android:id="@+id/button5"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/favorite_button_add"
-                                android:text="Ajouter un favoris"
+                                android:text="@string/add_fav_btn"
                                 app:icon="@drawable/baseline_bookmark_add_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
 
                             <Button
                                 android:id="@+id/button7"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/delete_fav_button"
-                                android:text="Supprimer un favoris"
+                                android:text="@string/delete_fav_btn"
                                 app:icon="@drawable/baseline_bookmark_remove_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
 
                             <Button
                                 android:id="@+id/soundButton"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:layout_marginEnd="10dp"
                                 android:contentDescription="@string/changer_la_couleur"
-                                android:text="Changer le thème (INSTABLE)"
+                                android:text="@string/change_theme_btn"
                                 app:icon="@drawable/baseline_palette_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
 
                             <Button
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/SizeMenu"
                                 android:contentDescription="@string/delete_data_button"
                                 android:onClick='onDeleteDataClick'
-                                android:text="Supprimer toutes les données"
+                                android:text="@string/reset_app"
                                 app:icon="@drawable/baseline_delete_forever_24"
                                 app:iconPadding="0dp"
                                 app:iconSize="@dimen/SizeMenubtn" />
