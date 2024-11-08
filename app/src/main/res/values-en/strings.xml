@@ -7,7 +7,7 @@
     <string name="google_button">Google</string>
     <string name="delete_data_button">Delete all data</string>
     <string name="next_button">OK</string>
-    <string name="text_example_tuto">L\'interface de WebApper est plutôt simple, vous avez un menu que vous pouvez déplacer de droite à gauche comme ceci</string>
+    <string name="text_example_tuto">Scroll this text, the menu will be like that.</string>
     <string name="body_tuto2">This app is really fast.</string>
     <string name="text_example_tuto2">scroll this, please, do this. This is really important, please do it. Press this button: </string>
     <string name="head_title_tuto2">Time to fast.</string>
@@ -31,7 +31,7 @@
     <string name="saved_pages_btn">Saved favorite</string>
     <string name="add_fav_btn">Add this page to favorite</string>
     <string name="delete_fav_btn">Delete page from favorite</string>
-    <string name="change_theme_btn">Changer le thème</string>
+    <string name="change_theme_btn">Change app theme</string>
     <dimen name="SizeMenubtn">35dp</dimen>
     <string-array name="position_options">
         <item>Top</item>
@@ -40,11 +40,11 @@
         <item>Right</item>
     </string-array>
     <dimen name="SizeMenu">45dp</dimen>
-    <string name="DialHeadChangeURL">Changer l\'URL</string>
-    <string name="CancelText">Annuler</string>
+    <string name="DialHeadChangeURL">Change URL</string>
+    <string name="CancelText">Cancel</string>
     <string name="OkText">OK</string>
     <string name="ConfirmationText">Confirmation</string>
-    <string name="DialHeadDeleteData">Rénitialiser l\'appli ?</string>
+    <string name="DialHeadDeleteData">Reset the app?</string>
     <string name="ToastFavorisAlreadyExist">" à été déjà enregistré en tant que favori."</string>
     <string name="ToastFavorisAdded">" à été enregistré en tant que favori."</string>
     <string name="ToastHeadFavoris">Favoris enregistrés</string>
