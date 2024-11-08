@@ -7,6 +7,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -63,5 +64,13 @@
             android:text="@string/next_button" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1/3"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@
     <string name="delete_data_button">Supprimer les données</string>
     <string name="app_name" translatable="false">WebApper</string>
     <string name="next_button">OK</string>
-    <string name="text_example_tuto">Faites défiler ce texte pour comprendre comment fonctionne le menu puis une fois que vous êtes prêt appuyez sur \"OK\".</string>
+    <string name="text_example_tuto">L\'interface de WebApper est plutôt simple, vous avez un menu que vous pouvez déplacer de droite à gauche comme ceci</string>
     <string name="body_tuto2">La sécurité, c\'est le plus important, et dans WebApper, vos activitées sur internet peuvent être effacé à tout moment et rapidement dans le menu.</string>
     <string name="text_example_tuto2">Faites défiler ce texte pour appuyer sur le bouton qui vous permetra d\'accèder à la suite.</string>
     <string name="head_title_tuto2">La sécurité, et la simplicité</string>
@@ -40,5 +40,27 @@
         <item>Right</item>
     </string-array>
     <dimen name="SizeMenu">45dp</dimen>
+    <string name="DialHeadChangeURL">Changer l\'URL</string>
+    <string name="CancelText">Annuler</string>
+    <string name="OkText">OK</string>
+    <string name="ConfirmationText">Confirmation</string>
+    <string name="DialHeadDeleteData">Rénitialiser l\'appli ?</string>
+    <string name="ToastFavorisAlreadyExist">" à été déjà enregistré en tant que favori."</string>
+    <string name="ToastFavorisAdded">" à été enregistré en tant que favori."</string>
+    <string name="ToastHeadFavoris">Favoris enregistrés</string>
+    <string name="ToastHeadFavorisDelete">Supprimer un favori</string>
+    <string name="DialHeadTheme">Séléctionnez un théme</string>
+    <string name="ThemeDefaultText">Thème par défaut</string>
+    <string name="ThemeNightText">Thème Nuit</string>
+    <string name="ToastThemeDefaultText">Thème clair activé.</string>
+    <string name="ToastThemeNightText">Thème Nuit</string>
+    <string name="DialHeadDownloadAsk">Télécharger \"%1$s\" ?</string>
+    <string name="DialHeadDownload">Téléchargement en cours</string>
+    <string name="DialBodyDownload">Téléchargement en cours de \"%1$s\" en cours..</string>
+    <string name="ToastDownloadCancel">Le téléchargement de \"%1$s\" à été annulé.</string>
+    <string name="DialButtonDownloadCancel">Annuler le téléchargement</string>
+    <string name="ToastDownloadFinished">Le téléchargement de \"%1$s\" est terminé.</string>
+    <string name="ToastDownloadFailed">Le téléchargement de \"%1$s\" à échoué.</string>
+    <string name="DialBodyDownloadText">Le téléchargement est à</string>
 
 </resources>
