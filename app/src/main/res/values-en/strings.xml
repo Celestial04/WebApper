@@ -31,5 +31,10 @@
     <string name="saved_pages_btn">Saved favorite</string>
     <string name="add_fav_btn">Add this page to favorite</string>
     <string name="delete_fav_btn">Delete page from favorite</string>
-    <string name="change_theme_btn">Change theme (will be retired in the futur)</string>
+    <string name="change_theme_btn">Change app theme</string>
+    <string name="DialHeadChangeURL">Change URL</string>
+    <string name="CancelText">Cancel</string>
+    <string name="OkText">OK</string>
+    <string name="ConfirmationText">Confirmation</string>
+    <string name="DialHeadDeleteData">Reset the app?</string>
 </resources>

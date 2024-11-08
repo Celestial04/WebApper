@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:targetApi="34">
+        tools:targetApi="35">
         <activity
             android:name="com.bouillie.web.tuto_3"
             android:exported="false" />
