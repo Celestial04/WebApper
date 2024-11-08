@@ -31,7 +31,7 @@
     <string name="saved_pages_btn">Favoris enregistrés</string>
     <string name="add_fav_btn">Ajouter un favoris</string>
     <string name="delete_fav_btn">Supprimer un favoris</string>
-    <string name="change_theme_btn">Changer le thème (INSTABLE)</string>
+    <string name="change_theme_btn">Changer le thème</string>
     <dimen name="SizeMenubtn">35dp</dimen>
     <string-array name="position_options">
         <item>Top</item>
