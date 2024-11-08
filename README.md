@@ -94,5 +94,4 @@ seront aussitôt mises dans le code source de l'application.
 ## Contribution
 
 Tout le monde peut proposer des changements, voir des corrections, ce qui m'aide beaucoup, et permet
-d'accélerer le développement de WebApper, et j'en suis très reconnaissante et je vous remercie d'
-avance! ^-^
+d'accélerer le développement de WebApper, et j'en suis très reconnaissante et je vous remercie d'avance! ^-^
