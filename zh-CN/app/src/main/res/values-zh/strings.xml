@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="head_title_tuto1">Bienvenue sur WebApper, le navigateur simple, et sécurisé.</string>
+    <string name="body_tuto1">Dans WebApper, toute l\'application est le plus simpliste possible, cela veux dire que vous n\'aurez pas besoin d\'aller chercher un paramètre dans menu spécifique auquel il est difficile d\'accès, tout est en haut. Faites defiler le menu en haut pour avoir accès à tout les paramètres, sans quitter l\'application !</string>
+    <string name="text_button_tuto1">Appuyez sur \"OK\" pour la suite.</string>
+    <string name="forward_button">Avancer</string>
+    <string name="google_button">Google</string>
+    <string name="delete_data_button">Supprimer les données</string>
+    <string name="next_button">OK</string>
+    <string name="text_example_tuto">L\'interface de WebApper est plutôt simple, vous avez un menu que vous pouvez déplacer de droite à gauche comme ceci</string>
+    <string name="body_tuto2">La sécurité, c\'est le plus important, et dans WebApper, vos activitées sur internet peuvent être effacé à tout moment et rapidement dans le menu.</string>
+    <string name="text_example_tuto2">Faites défiler ce texte pour appuyer sur le bouton qui vous permetra d\'accèder à la suite.</string>
+    <string name="head_title_tuto2">La sécurité, et la simplicité</string>
+    <string name="head_title_tuto3">Vous avez presque terminé</string>
+    <string name="body_tuto3">WebApper, c\'est un navigateur web concentré sur la simplicité, rapidité et sécurité.</string>
+    <string name="text_button_tuto3">Appuyez sur \"OK\" pour terminer.</string>
+    <string name="button_example_3">Appuyez ici pour faire apparaître le bouton \"OK\".</string>
+    <string name="favorite_button_add">Ajouter cette page aux favoris</string>
+    <string name="view_fav">Voir les favoris d\'enregistrées</string>
+    <string name="delete_fav_button">Supprimer un favori d\'enregistré</string>
+    <string name="refresh_button">Recharger</string>
+    <string name="btn_chg_color">Changer la couleur</string>
+    <string name="changer_la_couleur">Changer la couleur</string>
+    <string name="t_l_chargement_en_cours">Téléchargement en cours…</string>
+    <string name="vitesse_du_tl_chargement">Vitesse du téléchargement :</string>
+    <string name="le_tl_chargement_de">"Le téléchargement de "</string>
+    <string name="reset_app">Supprimer toutes les données</string>
+    <string name="previous_page">Page précédente</string>
+    <string name="change_url_btn">Changer l\'URL</string>
+    <string name="reload_page_btn">Recharger la page</string>
+    <string name="saved_pages_btn">Favoris enregistrés</string>
+    <string name="add_fav_btn">Ajouter un favoris</string>
+    <string name="delete_fav_btn">Supprimer un favoris</string>
+    <string name="change_theme_btn">Changer le thème</string>
+    <dimen name="SizeMenubtn">35dp</dimen>
+    <string-array name="position_options">
+        <item>Top</item>
+        <item>Bottom</item>
+        <item>Left</item>
+        <item>Right</item>
+    </string-array>
+    <dimen name="SizeMenu">45dp</dimen>
+    <string name="DialHeadChangeURL">Changer l\'URL</string>
+    <string name="CancelText">Annuler</string>
+    <string name="OkText">OK</string>
+    <string name="ConfirmationText">Confirmation</string>
+    <string name="DialHeadDeleteData">Rénitialiser l\'appli ?</string>
+    <string name="ToastFavorisAlreadyExist">" à été déjà enregistré en tant que favori."</string>
+    <string name="ToastFavorisAdded">" à été enregistré en tant que favori."</string>
+    <string name="ToastHeadFavoris">Favoris enregistrés</string>
+    <string name="ToastHeadFavorisDelete">Supprimer un favori</string>
+    <string name="DialHeadTheme">Séléctionnez un théme</string>
+    <string name="ThemeDefaultText">Thème par défaut</string>
+    <string name="ThemeNightText">Thème Nuit</string>
+    <string name="ToastThemeDefaultText">Thème clair activé.</string>
+    <string name="ToastThemeNightText">Thème Nuit</string>
+    <string name="DialHeadDownloadAsk">Télécharger \"%1$s\" ?</string>
+    <string name="DialHeadDownload">Téléchargement en cours</string>
+    <string name="DialBodyDownload">Téléchargement en cours de \"%1$s\" en cours..</string>
+    <string name="ToastDownloadCancel">Le téléchargement de \"%1$s\" à été annulé.</string>
+    <string name="DialButtonDownloadCancel">Annuler le téléchargement</string>
+    <string name="ToastDownloadFinished">Le téléchargement de \"%1$s\" est terminé.</string>
+    <string name="ToastDownloadFailed">Le téléchargement de \"%1$s\" à échoué.</string>
+    <string name="DialBodyDownloadText">Le téléchargement est à</string>
+</resources>
