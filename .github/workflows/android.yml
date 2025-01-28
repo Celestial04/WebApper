@@ -27,13 +27,13 @@ jobs:
       run: ./gradlew build
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: build-artifacts
         path: app/build/outputs/
 
     - name: Download build artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: build-artifacts
         path: app/build/outputs/
