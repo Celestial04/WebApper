@@ -25,7 +25,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > my-release-key.jks
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > webKeyRL.jks
+
+      - name: Debug - Check Keystore existence
+        run: ls -la webKeyRL.jks
 
       - name: Build Signed APK
         run: |
