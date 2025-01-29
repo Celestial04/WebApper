@@ -47,3 +47,22 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
 
+// Ensure you have the correct task to build the APK
+tasks.register('assembleRelease') {
+    doLast {
+        // This should generate the APK in the specified directory
+        println("Assembling release APK...")
+    }
+}
+
+tasks.register('copyApk') {
+    dependsOn 'assembleRelease'
+    doLast {
+        copy {
+            from 'app/build/outputs/apk/release/'
+            into 'build/libs/'
+            include '**/*.apk'
+        }
+    }
+}
+
