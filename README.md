@@ -45,7 +45,7 @@ utiliser, ça c'est cool.
 
 ## Voici une petite vidéo montrant toutes les fonctions de WebApper
 
-![Démo.mp4](https://katsuu04.dev/cdn/videos/WebApper.mp4)
+![Démo.mp4](demo.mp4)
 *Vidéo démo sur les fonctionnalitées de l'application*
 
 ## Téléchargements
