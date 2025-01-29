@@ -22,7 +22,7 @@ jobs:
           java-version: '17'  # Version adaptée à ton projet
 
       - name: Setup Gradle cache
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Build APK
         run: ./gradlew assembleDebug  # Remplace par `assembleRelease` si nécessaire
