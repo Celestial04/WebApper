@@ -2,32 +2,33 @@ name: Android Build
 
 on:
   push:
-    branches: [ main ]  # Déclencheur : à chaque push sur "main"
-  pull_request:         # Déclencheur : à chaque Pull Request
-    branches: [ main ]
+    branches:
+      - main
+  pull_request:
 
 jobs:
   build:
+    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'temurin'
+          java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+      - name: Setup Gradle cache
+        uses: gradle/gradle-build-action@v3
 
       - name: Build APK
-        run: ./gradlew assembleRelease  # Ou assembleDebug pour une build debug
+        run: ./gradlew assembleDebug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
+      - name: Upload APK as Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: app-release-${{ github.run_id }}.apk
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
