@@ -47,7 +47,3 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
 
-jar {
-    archiveFileName = 'WebApper.jar'
-    destinationDirectory = file("$buildDir/libs")
-}
