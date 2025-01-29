@@ -45,7 +45,7 @@ utiliser, ça c'est cool.
 
 ## Voici une petite vidéo montrant toutes les fonctions de WebApper
 
-![Démo.mp4](demo.mp4)
+![Démo](demo.gif)
 *Vidéo démo sur les fonctionnalitées de l'application*
 
 ## Téléchargements
