@@ -35,7 +35,7 @@ jobs:
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload APK as Artifact
+      - name: Upload Signed APK as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
