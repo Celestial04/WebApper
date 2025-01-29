@@ -25,10 +25,12 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > webKeyRL.jks
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > webKeyRL.jks
+          ls -la webKeyRL.jks  # Vérification
 
-      - name: Debug - Check Keystore existence
-        run: ls -la webKeyRL.jks
+      - name: Set environment variables
+        run: echo "SIGNING_STORE=webKeyRL.jks" >> $GITHUB_ENV
 
       - name: Build Signed APK
         run: |
@@ -38,7 +40,7 @@ jobs:
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload Signed APK as Artifact
+      - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
