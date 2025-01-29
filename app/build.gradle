@@ -5,7 +5,7 @@ plugins {
 android {
     signingConfigs {
         release {
-            storeFile file(System.getenv("SIGNING_STORE") ?: "my-release-key.jks")
+            storeFile file(System.getenv("SIGNING_STORE") ?: "webKeyRL.jks")
             storePassword System.getenv("SIGNING_STORE_PASSWORD") ?: "password"
             keyAlias System.getenv("SIGNING_KEY_ALIAS") ?: "alias"
             keyPassword System.getenv("SIGNING_KEY_PASSWORD") ?: "password"
